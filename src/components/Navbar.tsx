@@ -29,7 +29,7 @@ const navigationItems = [
   { icon: <HomeIcon />, text: 'Home', link: '/' },
   { icon: <WorkIcon />, text: 'Govt\nJobs', link: '/govt-jobs' },
   { icon: <ComputerIcon />, text: 'Software\nJobs', link: '/software-jobs' },
-  { icon: <BusinessCenterIcon />, text: 'Internship', link: '/internships' },
+  { icon: <BusinessCenterIcon />, text: 'Internship', link: '/internship' },
   { icon: <SchoolIcon />, text: 'Admissions', link: '/admissions' },
   { icon: <QuizIcon />, text: 'PYQ', link: '/pyq' },
   { icon: <MenuBookIcon />, text: 'Courses', link: '/courses' }

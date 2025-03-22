@@ -120,54 +120,10 @@ const Internships = () => {
     }
   ];
 
-  // Filter and sort internships
-  const filteredInternships = internshipListings
-    .filter(internship => {
-      const searchLower = searchQuery.toLowerCase();
-      return (
-        internship.company.toLowerCase().includes(searchLower) ||
-        internship.role.toLowerCase().includes(searchLower) ||
-        internship.field.toLowerCase().includes(searchLower) ||
-        internship.location.toLowerCase().includes(searchLower)
-      );
-    })
-    .filter(internship => {
-      if (!filterValue) return true;
-      switch (filterValue) {
-        case 'location':
-          return internship.location === 'Hyderabad' || internship.location === 'Bangalore';
-        case 'duration':
-          return internship.duration === '6 Months' || internship.duration === '3 Months';
-        case 'field':
-          return internship.field === 'Technology' || internship.field === 'Marketing';
-        default:
-          return true;
-      }
-    })
-    .sort((a, b) => {
-      if (!sortBy) return 0;
-      switch (sortBy) {
-        case 'startDate':
-          return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
-        case 'duration':
-          return parseInt(a.duration) - parseInt(b.duration);
-        case 'company':
-          return a.company.localeCompare(b.company);
-        default:
-          return 0;
-      }
-    });
-
   return (
-    <Box sx={{ 
-      height: 'calc(100vh - 180px)', // Fixed height for the entire component
-      display: 'flex',
-      flexDirection: 'column',
-      bgcolor: 'white'
-    }}>
-      {/* Fixed Header Section */}
-      <Box sx={{ px: 3, pt: 2, pb: 1 }}>
-        <Typography variant="h5" sx={{ mb: 2, color: '#005587', fontWeight: 500 }}>
+    <Box sx={{ height: 'calc(100vh - 180px)', display: 'flex', flexDirection: 'column' }}>
+      <Container maxWidth="xl" sx={{ pt: 2, pb: 1 }}>
+        <Typography variant="h5" sx={{ mb: 2, color: '#005587' }}>
           Internships
         </Typography>
 
@@ -182,12 +138,11 @@ const Internships = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               sx={{ 
                 flex: 1,
-                maxWidth: '300px',
+                maxWidth: '400px',
                 '& .MuiOutlinedInput-root': {
                   borderRadius: '4px',
-                  bgcolor: '#EBF5FF',
-                  fontSize: '0.875rem',
-                  height: '36px'
+                  bgcolor: 'white',
+                  fontSize: '0.875rem'
                 }
               }}
               InputProps={{
@@ -222,53 +177,35 @@ const Internships = () => {
             </Select>
           </FormControl>
         </Box>
-      </Box>
+      </Container>
 
-      {/* Scrollable Table Section */}
-      <Box sx={{ 
-        flex: 1, 
-        overflow: 'auto',
-        px: 3,
-        '&::-webkit-scrollbar': {
-          width: '8px',
-          height: '8px',
-        },
-        '&::-webkit-scrollbar-track': {
-          backgroundColor: '#f1f1f1',
-        },
-        '&::-webkit-scrollbar-thumb': {
-          backgroundColor: '#888',
-          borderRadius: '4px',
-          '&:hover': {
-            backgroundColor: '#666',
-          },
-        },
-      }}>
-        <TableContainer 
-          component={Paper} 
-          sx={{ 
-            boxShadow: 'none',
-            border: '1px solid #e0e0e0',
-            height: '100%'
-          }}
-        >
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Company</TableCell>
-                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Role</TableCell>
-                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Qualification</TableCell>
-                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Internship Type</TableCell>
-                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Duration</TableCell>
-                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Field</TableCell>
-                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Location</TableCell>
-                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Start Date</TableCell>
-                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredInternships.length > 0 ? (
-                filteredInternships.map((internship, index) => (
+      {/* Internships Table - Scrollable Section */}
+      <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
+        <Container maxWidth="xl" sx={{ height: '100%' }}>
+          <TableContainer 
+            component={Paper} 
+            sx={{ 
+              boxShadow: 'none',
+              height: '100%',
+              overflow: 'auto'
+            }}
+          >
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Company</TableCell>
+                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Role</TableCell>
+                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Qualification</TableCell>
+                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Internship Type</TableCell>
+                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Duration</TableCell>
+                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Field</TableCell>
+                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Location</TableCell>
+                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Start Date</TableCell>
+                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>More</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {internshipListings.map((internship, index) => (
                   <TableRow 
                     key={index}
                     sx={{ 
@@ -286,30 +223,23 @@ const Internships = () => {
                     <TableCell>{internship.startDate}</TableCell>
                     <TableCell>
                       <Button
-                        variant="contained"
-                        size="small"
+                        component={Link}
+                        to={`/internships/${index}`}
                         sx={{ 
-                          bgcolor: '#005587',
-                          '&:hover': { bgcolor: '#004570' }
+                          color: '#005587',
+                          textTransform: 'none',
+                          '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' }
                         }}
                       >
-                        Apply
+                        View & Apply
                       </Button>
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={9} align="center" sx={{ py: 3 }}>
-                    <Typography variant="body1" color="textSecondary">
-                      No internships found matching your criteria
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Container>
       </Box>
     </Box>
   );
