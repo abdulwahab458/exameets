@@ -121,126 +121,134 @@ const Internships = () => {
   ];
 
   return (
-    <Box sx={{ height: 'calc(100vh - 180px)', display: 'flex', flexDirection: 'column' }}>
-      <Container maxWidth="xl" sx={{ pt: 2, pb: 1 }}>
-        <Typography variant="h5" sx={{ mb: 2, color: '#005587' }}>
-          Internships
-        </Typography>
+    <Box sx={{ 
+      minHeight: 'calc(100vh - 250px)',
+      display: 'flex',
+      flexDirection: 'column',
+      bgcolor: 'white',
+      width: '100%',
+      mt: 2
+    }}>
+      {/* Fixed Header Section */}
+      <Container maxWidth="xl">
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="h5" sx={{ mb: 2, color: '#005587', fontWeight: 500 }}>
+            Internships
+          </Typography>
 
-        {/* Search and Filter Section */}
-        <Box sx={{ display: 'flex', gap: 2, mb: 2, alignItems: 'center' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-            <Typography variant="body2" sx={{ mr: 1 }}>Search</Typography>
-            <TextField
-              size="small"
-              placeholder="Search internships here.."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              sx={{ 
-                flex: 1,
-                maxWidth: '400px',
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '4px',
-                  bgcolor: 'white',
-                  fontSize: '0.875rem'
-                }
-              }}
-              InputProps={{
-                endAdornment: <SearchIcon color="action" fontSize="small" />
-              }}
-            />
+          {/* Search and Filter Section */}
+          <Box sx={{ display: 'flex', gap: 2, mb: 2, alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+              <Typography variant="body2" sx={{ mr: 1 }}>Search</Typography>
+              <TextField
+                size="small"
+                placeholder="Search internships here.."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                sx={{ 
+                  flex: 1,
+                  maxWidth: '300px',
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '4px',
+                    bgcolor: '#EBF5FF',
+                    fontSize: '0.875rem',
+                    height: '36px'
+                  }
+                }}
+                InputProps={{
+                  endAdornment: <SearchIcon color="action" fontSize="small" />
+                }}
+              />
+            </Box>
+
+            <FormControl size="small" sx={{ minWidth: 200 }}>
+              <InputLabel>Filter</InputLabel>
+              <Select
+                value={filterValue}
+                label="Filter"
+                onChange={(e) => setFilterValue(e.target.value)}
+              >
+                <MenuItem value="location">Location</MenuItem>
+                <MenuItem value="duration">Duration</MenuItem>
+                <MenuItem value="field">Field</MenuItem>
+              </Select>
+            </FormControl>
+
+            <FormControl size="small" sx={{ minWidth: 200 }}>
+              <InputLabel>Sort by</InputLabel>
+              <Select
+                value={sortBy}
+                label="Sort by"
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <MenuItem value="startDate">Start Date</MenuItem>
+                <MenuItem value="duration">Duration</MenuItem>
+                <MenuItem value="company">Company</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
-
-          <FormControl size="small" sx={{ minWidth: 200 }}>
-            <InputLabel>Filter</InputLabel>
-            <Select
-              value={filterValue}
-              label="Filter"
-              onChange={(e) => setFilterValue(e.target.value)}
-            >
-              <MenuItem value="location">Location</MenuItem>
-              <MenuItem value="duration">Duration</MenuItem>
-              <MenuItem value="field">Field</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl size="small" sx={{ minWidth: 200 }}>
-            <InputLabel>Sort by</InputLabel>
-            <Select
-              value={sortBy}
-              label="Sort by"
-              onChange={(e) => setSortBy(e.target.value)}
-            >
-              <MenuItem value="startDate">Start Date</MenuItem>
-              <MenuItem value="duration">Duration</MenuItem>
-              <MenuItem value="company">Company</MenuItem>
-            </Select>
-          </FormControl>
         </Box>
-      </Container>
 
-      {/* Internships Table - Scrollable Section */}
-      <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
-        <Container maxWidth="xl" sx={{ height: '100%' }}>
-          <TableContainer 
-            component={Paper} 
-            sx={{ 
-              boxShadow: 'none',
-              height: '100%',
-              overflow: 'auto'
-            }}
-          >
-            <Table stickyHeader>
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Company</TableCell>
-                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Role</TableCell>
-                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Qualification</TableCell>
-                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Internship Type</TableCell>
-                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Duration</TableCell>
-                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Field</TableCell>
-                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Location</TableCell>
-                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>Start Date</TableCell>
-                  <TableCell sx={{ bgcolor: '#F8FBFF' }}>More</TableCell>
+        {/* Table Section */}
+        <TableContainer 
+          component={Paper} 
+          sx={{ 
+            boxShadow: 'none',
+            border: '1px solid #e0e0e0',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            mb: 3
+          }}
+        >
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Company</TableCell>
+                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Role</TableCell>
+                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Qualification</TableCell>
+                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Internship Type</TableCell>
+                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Duration</TableCell>
+                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Field</TableCell>
+                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Location</TableCell>
+                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Start Date</TableCell>
+                <TableCell sx={{ bgcolor: '#F8FBFF', fontWeight: 600 }}>Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {internshipListings.map((internship, index) => (
+                <TableRow 
+                  key={index}
+                  sx={{ 
+                    '&:nth-of-type(odd)': { bgcolor: '#F8FBFF' },
+                    '&:hover': { bgcolor: '#EDF5FF' }
+                  }}
+                >
+                  <TableCell>{internship.company}</TableCell>
+                  <TableCell>{internship.role}</TableCell>
+                  <TableCell>{internship.qualification}</TableCell>
+                  <TableCell>{internship.internshipType}</TableCell>
+                  <TableCell>{internship.duration}</TableCell>
+                  <TableCell>{internship.field}</TableCell>
+                  <TableCell>{internship.location}</TableCell>
+                  <TableCell>{internship.startDate}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      sx={{ 
+                        bgcolor: '#005587',
+                        '&:hover': { bgcolor: '#004570' }
+                      }}
+                    >
+                      Apply
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {internshipListings.map((internship, index) => (
-                  <TableRow 
-                    key={index}
-                    sx={{ 
-                      '&:nth-of-type(odd)': { bgcolor: '#F8FBFF' },
-                      '&:hover': { bgcolor: '#EDF5FF' }
-                    }}
-                  >
-                    <TableCell>{internship.company}</TableCell>
-                    <TableCell>{internship.role}</TableCell>
-                    <TableCell>{internship.qualification}</TableCell>
-                    <TableCell>{internship.internshipType}</TableCell>
-                    <TableCell>{internship.duration}</TableCell>
-                    <TableCell>{internship.field}</TableCell>
-                    <TableCell>{internship.location}</TableCell>
-                    <TableCell>{internship.startDate}</TableCell>
-                    <TableCell>
-                      <Button
-                        component={Link}
-                        to={`/internships/${index}`}
-                        sx={{ 
-                          color: '#005587',
-                          textTransform: 'none',
-                          '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' }
-                        }}
-                      >
-                        View & Apply
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Container>
-      </Box>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
     </Box>
   );
 };

@@ -14,6 +14,7 @@ import Register from './components/Register';
 import OTPVerification from './components/OTPVerification';
 import RegistrationSteps from './components/RegistrationSteps';
 import Courses from './components/Courses';
+import Box from '@mui/material/Box';
 
 import './App.css';
 
@@ -36,9 +37,18 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <div className="app">
+        <Box sx={{ 
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          bgcolor: '#f5f5f5'  // Light gray background
+        }}>
           <Navbar />
-          <main style={{ flex: 1 }}>
+          <Box component="main" sx={{ 
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/software-jobs" element={<SoftwareJobs />} />
@@ -52,9 +62,9 @@ function App() {
               <Route path="/otp-verification" element={<OTPVerification />} />
               <Route path="/registration-steps" element={<RegistrationSteps />} />
             </Routes>
-          </main>
+          </Box>
           <Footer />
-        </div>
+        </Box>
       </Router>
     </ThemeProvider>
   );
