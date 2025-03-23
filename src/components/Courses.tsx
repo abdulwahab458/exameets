@@ -1,115 +1,127 @@
 import {
   Box,
+  Container,
   Typography,
   TextField,
-  IconButton
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ConstructionIcon from '@mui/icons-material/Construction';
 
 const Courses = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
-    <Box sx={{ 
-      height: 'calc(100vh - 64px)',
-      display: 'flex',
-      flexDirection: 'column'
-    }}>
-      {/* Header */}
+    <Container maxWidth="xl" sx={{ height: '100%', py: { xs: 2, sm: 3 } }}>
       <Box sx={{ 
-        bgcolor: '#EBF5FF',
-        p: 2
+        display: 'flex',
+        flexDirection: 'column',
+        bgcolor: 'white',
+        width: '100%',
+        height: '100%',
+        borderRadius: 1,
+        boxShadow: 1,
+        overflow: 'hidden'
       }}>
-        <Typography 
-          sx={{ 
-            fontSize: '16px',
-            fontWeight: 500,
-            mb: 2
-          }}
-        >
-          Courses
-        </Typography>
+        {/* Header Section */}
         <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: 1
+          p: { xs: 2, sm: 3 },
+          borderBottom: 1,
+          borderColor: 'divider',
+          bgcolor: 'white'
         }}>
-          <Typography sx={{ fontSize: '14px' }}>
-            Search
+          <Typography 
+            variant="h5" 
+            sx={{ 
+              mb: 2, 
+              color: '#005587', 
+              fontWeight: 500,
+              fontSize: { xs: '1.25rem', sm: '1.5rem' }
+            }}
+          >
+            Courses
           </Typography>
+
+          {/* Search Section */}
           <Box sx={{ 
-            display: 'flex',
-            flex: 1,
-            position: 'relative',
-            maxWidth: '300px'
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 1,
+            mb: 2
           }}>
+            <Typography variant="body2" sx={{ minWidth: { xs: '100%', sm: 'auto' } }}>
+              Search
+            </Typography>
             <TextField
-              fullWidth
-              placeholder="Search here.."
               size="small"
-              sx={{
+              placeholder="Search courses here.."
+              sx={{ 
+                flex: 1,
+                maxWidth: { xs: '100%', sm: '300px' },
                 '& .MuiOutlinedInput-root': {
-                  bgcolor: 'white',
-                  height: '36px',
-                  '& fieldset': {
-                    borderColor: '#e0e0e0'
-                  },
-                  '& input': {
-                    padding: '8px 14px',
-                    fontSize: '0.875rem'
-                  }
+                  borderRadius: '4px',
+                  bgcolor: '#EBF5FF',
+                  fontSize: '0.875rem',
+                  height: '36px'
                 }
               }}
-            />
-            <IconButton 
-              sx={{ 
-                position: 'absolute',
-                right: 8,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: '#005587',
-                padding: '4px'
+              InputProps={{
+                endAdornment: <SearchIcon color="action" fontSize="small" />
               }}
-            >
-              <SearchIcon sx={{ fontSize: '20px' }} />
-            </IconButton>
+            />
           </Box>
         </Box>
-      </Box>
 
-      {/* Content */}
-      <Box sx={{
-        flex: 1,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        p: 3
-      }}>
-        <Box sx={{
-          bgcolor: '#EBF5FF',
-          borderRadius: '16px',
-          p: 4,
+        {/* Under Construction Message */}
+        <Box sx={{ 
+          flex: 1,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 2
+          justifyContent: 'center',
+          p: { xs: 2, sm: 3 },
+          textAlign: 'center'
         }}>
-          <Box sx={{
-            width: '48px',
-            height: '48px',
+          <Box sx={{ 
+            width: { xs: 60, sm: 80 },
+            height: { xs: 60, sm: 80 },
             borderRadius: '50%',
-            bgcolor: '#005587',
+            bgcolor: '#EBF5FF',
             display: 'flex',
+            alignItems: 'center',
             justifyContent: 'center',
-            alignItems: 'center'
+            mb: 2
           }}>
-            <ErrorOutlineIcon sx={{ color: 'white' }} />
+            <ConstructionIcon sx={{ 
+              fontSize: { xs: 30, sm: 40 },
+              color: '#005587'
+            }} />
           </Box>
-          <Typography sx={{ color: '#333' }}>
-            This page is under Construction
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              color: '#005587',
+              mb: 1,
+              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+            }}
+          >
+            Under Construction
+          </Typography>
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              color: 'text.secondary',
+              maxWidth: '400px',
+              fontSize: { xs: '0.875rem', sm: '1rem' }
+            }}
+          >
+            We're working hard to bring you the best courses. Stay tuned for updates!
           </Typography>
         </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

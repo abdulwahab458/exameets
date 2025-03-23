@@ -3,44 +3,37 @@ import {
   Container,
   Typography,
   TextField,
-  Button,
   Grid,
-  Paper,
   Card,
   CardContent,
   CardActions,
+  Button,
   InputAdornment
 } from '@mui/material';
-import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import DownloadIcon from '@mui/icons-material/Download';
-
-interface ExamPaper {
-  name: string;
-  downloadLink: string;
-}
+import { useState } from 'react';
 
 const examData = [
-  { id: 1, name: 'BPSC CCE', year: '2023', papers: 12 },
-  { id: 2, name: 'SSC GD', year: '2023', papers: 8 },
-  { id: 3, name: 'JEE Mains', year: '2023', papers: 15 },
-  { id: 4, name: 'NEET', year: '2023', papers: 10 },
-  { id: 5, name: 'UPSC', year: '2023', papers: 20 },
-  { id: 6, name: 'TCS NQT', year: '2023', papers: 6 },
-  { id: 7, name: 'MET', year: '2023', papers: 5 },
-  { id: 8, name: 'Google', year: '2023', papers: 4 },
-  { id: 9, name: 'GATE CSE', year: '2023', papers: 15 },
-  { id: 10, name: 'GATE ECE', year: '2023', papers: 12 },
-  { id: 11, name: 'CAT', year: '2023', papers: 8 },
-  { id: 12, name: 'MAT', year: '2023', papers: 6 },
-  { id: 13, name: 'CTET', year: '2023', papers: 10 },
-  { id: 14, name: 'UGC NET', year: '2023', papers: 14 },
-  { id: 15, name: 'IBPS PO', year: '2023', papers: 18 },
-  { id: 16, name: 'SBI PO', year: '2023', papers: 16 },
-  { id: 17, name: 'RRB NTPC', year: '2023', papers: 12 },
-  { id: 18, name: 'SSC CGL', year: '2023', papers: 15 },
-  { id: 19, name: 'SSC CHSL', year: '2023', papers: 10 },
-  { id: 20, name: 'AFCAT', year: '2023', papers: 8 }
+  { id: 1, name: 'BPSC CCE' },
+  { id: 2, name: 'SSC GD' },
+  { id: 3, name: 'JEE Mains' },
+  { id: 4, name: 'NEET' },
+  { id: 5, name: 'UPSC' },
+  { id: 6, name: 'TCS NQT' },
+  { id: 7, name: 'MET' },
+  { id: 8, name: 'Google' },
+  { id: 9, name: 'GATE CSE' },
+  { id: 10, name: 'GATE ECE' },
+  { id: 11, name: 'CAT' },
+  { id: 12, name: 'MAT' },
+  { id: 13, name: 'CTET' },
+  { id: 14, name: 'UGC NET' },
+  { id: 15, name: 'IBPS PO' },
+  { id: 16, name: 'SBI PO' },
+  { id: 17, name: 'RRB NTPC' },
+  { id: 18, name: 'SSC CGL' },
+  { id: 19, name: 'SSC CHSL' },
+  { id: 20, name: 'AFCAT' }
 ];
 
 const PYQ = () => {
@@ -53,37 +46,47 @@ const PYQ = () => {
         <Typography variant="h5" sx={{ mb: 3, color: '#1E2A39', fontWeight: 'bold' }}>
           Previous Year Question Papers
         </Typography>
-        <TextField
-          fullWidth
-          placeholder="Search for exam papers..."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon sx={{ color: '#005587' }} />
-              </InputAdornment>
-            ),
-          }}
-          sx={{
-            mb: 2,
-            maxWidth: '300px',
-            '& .MuiOutlinedInput-root': {
-              height: '36px',
-              bgcolor: '#EBF5FF',
-              '& fieldset': { border: 'none' },
-              '&:hover fieldset': { border: 'none' },
-              '&.Mui-focused fieldset': { border: 'none' }
-            },
-            '& .MuiOutlinedInput-input': {
-              padding: '8px 14px',
-              fontSize: '0.875rem'
-            }
-          }}
-        />
+        <Box sx={{ 
+          display: 'flex', 
+          gap: 1,
+          alignItems: 'center'
+        }}>
+          <Typography sx={{ fontSize: '14px' }}>
+            Search
+          </Typography>
+          <TextField
+            fullWidth
+            placeholder="Search here.."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon sx={{ color: '#005587' }} />
+                </InputAdornment>
+              ),
+            }}
+            sx={{ 
+              maxWidth: '300px',
+              '& .MuiOutlinedInput-root': {
+                height: '36px',
+                bgcolor: '#EBF5FF',
+                '& fieldset': { border: 'none' },
+                '&:hover fieldset': { border: 'none' },
+                '&.Mui-focused fieldset': { border: 'none' }
+              },
+              '& .MuiOutlinedInput-input': {
+                padding: '8px 14px',
+                fontSize: '0.875rem'
+              }
+            }}
+          />
+        </Box>
       </Box>
 
       {/* Scrollable Cards Section */}
       <Box sx={{ 
-        flex: 1, 
+        flex: 1,
         overflowY: 'auto',
         px: 3,
         pb: 3,
@@ -100,47 +103,58 @@ const PYQ = () => {
       }}>
         <Grid container spacing={3}>
           {examData.map((exam) => (
-            <Grid item xs={12} sm={6} md={4} key={exam.id}>
+            <Grid item xs={12} sm={6} md={3} key={exam.id}>
               <Card
-                sx={{
+                sx={{ 
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  bgcolor: '#EBF5FF',
-                  borderRadius: '12px',
-                  transition: 'transform 0.2s ease-in-out',
+                  border: '1px solid #005587',
+                  borderRadius: '4px',
+                  boxShadow: 'none',
                   '&:hover': {
-                    transform: 'translateY(-5px)',
-                    boxShadow: '0 8px 16px rgba(0,0,0,0.1)'
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                   }
                 }}
               >
-                <CardContent sx={{ flex: 1, p: 2.5 }}>
-                  <Typography variant="h6" sx={{ color: '#1E2A39', mb: 1, fontWeight: 'bold' }}>
+                <CardContent sx={{ 
+                  flex: 1, 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  p: 2
+                }}>
+                  <Typography 
+                    variant="h6" 
+                    align="center"
+                    sx={{ 
+                      color: '#1E2A39',
+                      fontWeight: 500
+                    }}
+                  >
                     {exam.name}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    Year: {exam.year}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    Available Papers: {exam.papers}
-                  </Typography>
-                  <Button
+                </CardContent>
+                <CardActions sx={{ 
+                  p: 0, 
+                  '& .MuiButton-root': { 
+                    borderRadius: 0,
+                    py: 1
+                  } 
+                }}>
+                  <Button 
+                    fullWidth 
                     variant="contained"
-                    startIcon={<DownloadIcon />}
-                    fullWidth
-                    sx={{
+                    sx={{ 
                       bgcolor: '#005587',
-                      color: 'white',
-                      textTransform: 'none',
                       '&:hover': {
                         bgcolor: '#004570'
                       }
                     }}
                   >
-                    Download Papers
+                    Download
                   </Button>
-                </CardContent>
+                </CardActions>
               </Card>
             </Grid>
           ))}

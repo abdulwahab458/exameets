@@ -12,10 +12,12 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Menu,
+  MenuItem
 } from '@mui/material';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import WorkIcon from '@mui/icons-material/Work';
 import ComputerIcon from '@mui/icons-material/Computer';
@@ -24,15 +26,18 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import MenuIcon from '@mui/icons-material/Menu';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import QuizIcon from '@mui/icons-material/Quiz';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import BookIcon from '@mui/icons-material/Book';
+import PersonIcon from '@mui/icons-material/Person';
 
 const navigationItems = [
   { icon: <HomeIcon />, text: 'Home', link: '/' },
-  { icon: <WorkIcon />, text: 'Govt\nJobs', link: '/govt-jobs' },
-  { icon: <ComputerIcon />, text: 'Software\nJobs', link: '/software-jobs' },
+  { icon: <SchoolIcon />, text: 'Govt Jobs', link: '/govt-jobs' },
+  { icon: <WorkIcon />, text: 'Software Jobs', link: '/software-jobs' },
   { icon: <BusinessCenterIcon />, text: 'Internship', link: '/internships' },
-  { icon: <SchoolIcon />, text: 'Admissions', link: '/admissions' },
-  { icon: <QuizIcon />, text: 'PYQ', link: '/pyq' },
-  { icon: <MenuBookIcon />, text: 'Courses', link: '/courses' }
+  { icon: <AssignmentIcon />, text: 'Admissions', link: '/admissions' },
+  { icon: <BookIcon />, text: 'PYQ', link: '/pyq' },
+  { icon: <BookIcon />, text: 'Courses', link: '/courses' }
 ];
 
 const Navbar = () => {
@@ -41,9 +46,26 @@ const Navbar = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
   const isAuthPage = ['/', '/login', '/register'].includes(location.pathname);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleNavigation = (link: string) => {
+    navigate(link);
+    handleClose();
+  };
+
   const drawer = (
     <Box sx={{ width: 250, bgcolor: '#005587', height: '100%', color: 'white' }}>
       <List>
@@ -67,6 +89,7 @@ const Navbar = () => {
       </List>
     </Box>
   );
+
   return (
     <>
       {/* Top Blue Bar */}
@@ -76,7 +99,7 @@ const Navbar = () => {
         </Typography>
       </Box>
       {/* Main Navbar */}
-      <AppBar position="static" sx={{ bgcolor: 'white', boxShadow: 'none' }}>
+      <AppBar position="sticky" sx={{ bgcolor: 'white', boxShadow: 1 }}>
         <Container maxWidth="xl">
           <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
             {/* Logo */}
@@ -112,15 +135,63 @@ const Navbar = () => {
             </Box>
             {/* Mobile Menu Icon */}
             {isMobile ? (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ ml: 2 }}
-              >
-                <MenuIcon />
-              </IconButton>
+              <>
+                <IconButton
+                  edge="end"
+                  color="primary"
+                  aria-label="menu"
+                  onClick={handleMenu}
+                  sx={{ color: '#005587' }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  PaperProps={{
+                    sx: {
+                      mt: 1.5,
+                      minWidth: 200,
+                      boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                    }
+                  }}
+                >
+                  {navigationItems.map((item) => (
+                    <MenuItem
+                      key={item.text}
+                      onClick={() => handleNavigation(item.link)}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                        color: '#005587',
+                        '&:hover': {
+                          bgcolor: '#EBF5FF'
+                        }
+                      }}
+                    >
+                      {item.icon}
+                      {item.text}
+                    </MenuItem>
+                  ))}
+                  <MenuItem
+                    onClick={() => handleNavigation('/login')}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 1,
+                      color: '#005587',
+                      '&:hover': {
+                        bgcolor: '#EBF5FF'
+                      }
+                    }}
+                  >
+                    <PersonIcon />
+                    Login
+                  </MenuItem>
+                </Menu>
+              </>
             ) : (
               /* Desktop Navigation Icons */
               <Box sx={{ 

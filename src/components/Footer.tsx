@@ -36,10 +36,10 @@ const Footer = () => {
             direction={{ xs: 'column', sm: 'row' }} 
             spacing={{ xs: 1, sm: 2 }}
             alignItems="center"
-            sx={{ 
+            sx={{
               fontSize: '0.875rem',
               '& > a': { 
-                color: 'white', 
+                color: 'white',
                 textDecoration: 'none',
                 '&:hover': { textDecoration: 'underline' }
               }
